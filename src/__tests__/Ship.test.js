@@ -1,6 +1,6 @@
 import Ship from "../modules/Ship";
 
-const ship = new Ship({ length: 4 })
+const ship = new Ship({ length: 4, name: 'Battleship' })
 
 describe('Have properties', () => {
   test('Ship should have a length property', () => {
@@ -13,6 +13,11 @@ describe('Have properties', () => {
 
   test('Ship should have a sunk property', () => {
     expect(ship).toHaveProperty('sunk');
+  });
+
+  test('Ship should have a name property', () => {
+    expect(ship).toHaveProperty('name');
+    expect(ship.name).toBeDefined();
   });
 });
 
