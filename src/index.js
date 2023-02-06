@@ -1,16 +1,21 @@
 import './sass/main.scss';
 import './template.html';
 import Player from './modules/Player';
+import Computer from './modules/Computer';
 import { SHIPS } from './modules/constants';
 
 const player = new Player();
-const enemy = new Player();
+const computer = new Computer();
 (async () => {
   await player.placeAllShips(SHIPS).then(() => console.log('Placed all our ships'));
-  await enemy.placeAllShips(SHIPS).then(() => console.log('Placed all enemy ships'));
+  computer.placeAllShipsAtOnce(SHIPS);
   for (let i = 0; i < 10; i += 1) {
-    Player.attackEnemy(enemy, [i, i]);
+    Computer.attackRandomly(player);
+    Computer.attackRandomly(computer);
   }
+  console.log(computer);
+  console.log(player);
 })();
+
 console.log(player);
-console.log(enemy);
+console.log(computer);

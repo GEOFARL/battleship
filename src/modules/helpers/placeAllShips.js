@@ -23,3 +23,17 @@ export default async function placeAllShips(ships) {
   });
   await Promise.all(shipPlacements);
 }
+
+export function placeAllShipsAtOnce(ships) {
+  ships.forEach((ship) => {
+    try {
+      let { x, y, isHorizontal } = getRandomPos();
+      while (!this.gameboard.canPlaceShip(ship.length, [x, y], isHorizontal)) {
+        ({ x, y, isHorizontal } = getRandomPos());
+      }
+      this.gameboard.placeShip(ship, [x, y], isHorizontal);
+    } catch (err) {
+      console.log(err.message);
+    }
+  });
+}
