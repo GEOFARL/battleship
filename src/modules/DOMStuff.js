@@ -1,30 +1,125 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Battleship</title>
-    <link
-      rel="shortcut icon"
-      href="./assets/images/ship.png"
-      type="image/x-icon"
-    />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700;800&family=Teko:wght@400;500;600;700&display=swap"
-      rel="stylesheet"
-    />
-  </head>
-  <body>
-    <header class="header">
-      <h1 class="heading-primary">Battleship Game</h1>
-    </header>
-    <div class="starting-screen">
-      <div class="starting-screen__main-container">
-        <div class="board">
-          <div class="board__symbol"></div>
+import { GRID_SIZE, SHIPS } from './constants';
+import player from './Game';
+import Ship from './Ship';
+
+let cells = [...document.querySelectorAll('.board__cell')];
+let placedShips = [];
+
+// GET ALL SHIPS ON THE BOARD
+let shipEls = [...document.querySelectorAll('.ship')];
+
+function setUpDragAndDrop(shipEl) {
+  shipEl.addEventListener('dragstart', (e) => {
+    // GET CURRENT SHIP
+    const ship = e.target.closest('.ship');
+
+    // TRANSFER ITS ID
+    e.dataTransfer.setData('text/plain', ship.id);
+
+    // HIDE AFTER DRAG EVENT STOPS
+    setTimeout(() => {
+      ship.classList.add('hide');
+    }, 0);
+  });
+}
+
+// MAKE EACH SHIP DRAGGABLE
+shipEls.forEach((shipEl) => setUpDragAndDrop(shipEl));
+
+function dragEnter(e) {
+  e.preventDefault();
+  e.target.classList.add('drag-over');
+}
+
+function dragOver(e) {
+  e.preventDefault();
+  e.target.classList.add('drag-over');
+}
+
+function dragLeave(e) {
+  e.target.classList.remove('drag-over');
+}
+
+function getShipCoordinates(cell) {
+  const index = Array.from(cells).indexOf(cell);
+  const y = Math.floor(index / 10);
+  const x = index % 10;
+  return [x, y];
+}
+
+function rotateShip(e) {
+  const boardCell = e.target.closest('.board__cell');
+  const shipEl = e.target.closest('.ship');
+  const [x, y] = getShipCoordinates(boardCell);
+  const id = Number(boardCell.querySelector('.ship').getAttribute('id'));
+
+  const newOrientation = shipEl.classList.contains('vertical');
+  const shipLength = shipEl.children.length;
+
+  player.gameboard.removeShip(id);
+
+  if (player.gameboard.canPlaceShip(shipLength, [x, y], newOrientation)) {
+    // ROTATE SHIP
+    shipEl.classList.toggle('vertical');
+
+    // GET IT BACK ON THE BOARD
+    player.replaceShip(id, [x, y], newOrientation);
+  } else {
+    player.replaceShip(id, [x, y], !newOrientation);
+  }
+}
+
+function drop(e) {
+  e.target.classList.remove('drag-over');
+
+  const id = e.dataTransfer.getData('text/plain');
+  const ship = document.getElementById(id);
+
+  // REVEAL A SHIP
+  ship.classList.remove('hide');
+
+  // GET IT IN THE CORRECT POSITION
+  ship.style.transform = 'rotate(180deg)';
+
+  const shipLength = ship.children.length;
+  const [oldX, oldY] = getShipCoordinates(ship.closest('.board__cell'));
+  const [newX, newY] = getShipCoordinates(e.target);
+
+  const isHorizontal = !ship.classList.contains('vertical');
+  player.gameboard.removeShip(Number(id));
+
+  if (player.gameboard.canPlaceShip(shipLength, [newX, newY], isHorizontal)) {
+    e.target.appendChild(ship);
+    ship.removeEventListener('click', rotateShip);
+    ship.addEventListener('click', rotateShip);
+    if (!placedShips.includes(ship)) {
+      player.placeShip(Number(id), [newX, newY], isHorizontal);
+      placedShips.push(ship);
+    } else {
+      player.moveShip(Number(id), [newX, newY], isHorizontal);
+    }
+  } else if (placedShips.includes(ship)) {
+    player.replaceShip(Number(id), [oldX, oldY], isHorizontal);
+  }
+}
+
+function addEventListenersToCells() {
+  cells = [...document.querySelectorAll('.board__cell')];
+  cells.forEach((cell) => {
+    cell.addEventListener('dragenter', dragEnter);
+    cell.addEventListener('dragover', dragOver);
+    cell.addEventListener('dragleave', dragLeave);
+    cell.addEventListener('drop', drop);
+  });
+}
+
+addEventListenersToCells();
+
+function resetAll() {
+  placedShips = [];
+  player.reset();
+  const board = document.querySelector('.board');
+  board.innerHTML = `<div class="board__symbol"></div>
           <div class="board__symbol">A</div>
           <div class="board__symbol">B</div>
           <div class="board__symbol">C</div>
@@ -154,20 +249,11 @@
           <div class="board__cell"></div>
           <div class="board__cell"></div>
           <div class="board__cell"></div>
-          <div class="board__cell"></div>
-        </div>
+          <div class="board__cell"></div>`;
 
-        <div class="hint">
-          <svg class="hint__icon">
-            <use href="./assets/images/hint-svgrepo-com.svg#hint-svgrepo-com" />
-          </svg>
-          <p class="hint__text">
-            Drag the ships to the grid, and then click to rotate
-          </p>
-        </div>
-
-        <div class="ship-picker">
-          <div class="ship ship--5" id="7" draggable="true">
+  addEventListenersToCells();
+  const shipPicker = document.querySelector('.ship-picker');
+  shipPicker.innerHTML = `<div class="ship ship--5" id="7" draggable="true">
             <div class="ship__cell"></div>
             <div class="ship__cell"></div>
             <div class="ship__cell"></div>
@@ -207,14 +293,53 @@
           <div class="ship ship--2 ship--2-3" id="1" draggable="true">
             <div class="ship__cell"></div>
             <div class="ship__cell"></div>
-          </div>
-        </div>
-      </div>
+          </div>`;
+  shipEls = [...document.querySelectorAll('.ship')];
+  shipEls.forEach((shipEl) => setUpDragAndDrop(shipEl));
+}
 
-      <div class="starting-screen__btns-container">
-        <button class="btn-primary random-btn">Randomize</button>
-        <button class="btn-primary reset-btn">Reset</button>
-      </div>
-    </div>
-  </body>
-</html>
+const resetBtn = document.querySelector('.reset-btn');
+resetBtn.addEventListener('click', resetAll);
+
+const randomizeBtn = document.querySelector('.random-btn');
+randomizeBtn.addEventListener('click', () => {
+  player.reset();
+  resetAll();
+  player.placeAllShipsAtOnce(SHIPS);
+  for (let i = 0; i < GRID_SIZE; i += 1) {
+    for (let j = 0; j < GRID_SIZE; j += 1) {
+      if (player.gameboard.grid[i][j] instanceof Ship) {
+        const rightSide = j + 1 >= GRID_SIZE
+          || player.gameboard.grid[i][j + 1] === undefined
+          || !(player.gameboard.grid[i][j + 1] instanceof Ship);
+
+        const upSide = i - 1 < 0
+          || player.gameboard.grid[i - 1][j] === undefined
+          || !(player.gameboard.grid[i - 1][j] instanceof Ship);
+
+        const downSide = i + 1 >= GRID_SIZE
+          || player.gameboard.grid[i + 1][j] === undefined
+          || !(player.gameboard.grid[i + 1][j] instanceof Ship);
+
+        const leftSide = j - 1 < 0
+          || player.gameboard.grid[i][j - 1] === undefined
+          || !(player.gameboard.grid[i][j - 1] instanceof Ship);
+
+        if (rightSide && upSide && downSide) {
+          const shipEl = document.querySelector(`#\\3${player.gameboard.grid[i][j].id}`);
+          shipEl.addEventListener('click', rotateShip);
+          shipEl.style.transform = 'rotate(180deg)';
+          const cellEl = cells[i * GRID_SIZE + j];
+          cellEl.appendChild(shipEl);
+        } else if (upSide && leftSide && rightSide) {
+          const shipEl = document.querySelector(`#\\3${player.gameboard.grid[i][j].id}`);
+          shipEl.addEventListener('click', rotateShip);
+          shipEl.classList.toggle('vertical');
+          shipEl.style.transform = 'rotate(180deg)';
+          const cellEl = cells[i * GRID_SIZE + j];
+          cellEl.appendChild(shipEl);
+        }
+      }
+    }
+  }
+});

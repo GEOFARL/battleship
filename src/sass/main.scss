@@ -1,6 +1,15 @@
 @forward './base/typography';
 @forward './base/base';
+@forward './base/animations';
+@forward './base/utilities';
 
 @forward './abstracts/variables';
 
+@forward './components/hint';
+@forward './components/board';
+@forward './components/ship-picker';
+@forward './components/button';
+@forward './components/ship';
+
 @forward './layout/header';
+@forward './layout/starting-screen';

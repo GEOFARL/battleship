@@ -1,4 +1,5 @@
 import { GRID_SIZE, MISSED_SHOT, HIT } from './constants';
+import Ship from './Ship';
 
 export default class Gameboard {
   constructor() {
@@ -9,7 +10,9 @@ export default class Gameboard {
 
   placeShip(ship, coordinates, horizontal = true) {
     const [x, y] = coordinates;
-    this.ships.push(ship);
+    if (!this.ships.includes(ship)) {
+      this.ships.push(ship);
+    }
     for (let i = 0; i < ship.length; i += 1) {
       if (horizontal) {
         this.grid[y][x - i] = ship;
@@ -73,5 +76,18 @@ export default class Gameboard {
   isFree(coordinates) {
     const [x, y] = coordinates;
     return this.grid[y][x] === null;
+  }
+
+  removeShip(id) {
+    this.grid = this.grid.map((row) => row.map((cell) => {
+      if (!(cell instanceof Ship)) return cell;
+      if (cell.id === Number(id)) return null;
+      return cell;
+    }));
+  }
+
+  resetBoard() {
+    this.grid = [...new Array(GRID_SIZE)].map(() => [...new Array(GRID_SIZE)].fill(null));
+    this.ships = [];
   }
 }

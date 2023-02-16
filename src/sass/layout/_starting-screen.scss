@@ -1,0 +1,28 @@
+.starting-screen {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  background-color: rgba(0, 0, 0, .75);
+
+  &__main-container {
+    max-width: 90rem;
+    margin: 8rem auto 0 auto;
+    padding: 2rem 2rem 4rem;
+    background: rgba(255, 255, 255, 0.65);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    border-radius: 1rem;
+    display: grid;
+    grid-template-rows: 10rem auto;
+    grid-template-areas: 
+      "board hint"
+      "board ship-picker";
+  }
+
+  &__btns-container {
+    width: max-content;
+    display: flex;
+    gap: 5rem;
+    margin: 4rem auto 0;
+  }
+}

@@ -1,5 +1,5 @@
 import Gameboard from './Gameboard';
-import { placeAllShipsAtOnce } from './helpers/placeAllShips';
+import placeAllShipsAtOnce from './helpers/placeAllShipsAtOnce';
 import getRandomPos from './helpers/getRandomPos';
 
 export default class Computer {

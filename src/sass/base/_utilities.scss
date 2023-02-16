@@ -1,0 +1,12 @@
+.hide {
+  visibility: hidden !important;
+  opacity: 0;
+}
+
+.vertical {
+  transform: rotate(90deg) !important;
+}
+
+.drag-over {
+  background-color: var(--color-blue-light-1);
+}

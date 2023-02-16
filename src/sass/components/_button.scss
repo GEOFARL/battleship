@@ -1,0 +1,25 @@
+.btn-primary {
+  font-size: 1.8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  border: 3px solid var(--color-blue-dark-3);
+  box-shadow: .1rem .15rem 1rem rgba(255, 255, 255, 0.05);
+  border-radius: 1rem;
+  appearance: none;
+  width: 18rem;
+  padding: 2rem 3rem;
+  cursor: pointer;
+  transition: all .3s;
+  color: white;
+  background-color: var(--color-blue-dark-3);
+
+  &:hover {
+    transform: translateY(-.4rem);
+    background-color: var(--color-blue-dark-1);
+    border: 3px solid var(--color-blue-dark-3);
+  }
+
+  &:active {
+    transform: translateY(0);
+  }
+}

@@ -1,0 +1,22 @@
+.hint {
+  align-self: center;
+  display: flex;
+  align-items: center;
+  grid-area: hint;
+
+  &:hover > &__icon {
+    animation: jello-horizontal .9s;
+  }
+
+  &__icon {
+    width: 8rem;
+    height: 8rem;
+    transition: all .3s;
+    fill: var(--color-blue-dark-3);
+  }
+
+  &__text {
+    margin-left: -1rem;
+    user-select: none;
+  }
+}

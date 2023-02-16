@@ -1,0 +1,17 @@
+.board {
+  display: grid;
+  grid-template-columns: repeat(11, 4rem);
+  grid-template-rows: repeat(11, 4rem);
+  place-items: center;
+  grid-area: board;
+
+  &__cell {
+    width: 98.5%;
+    height: 98.5%;
+    border: 1px solid var(--color-blue-dark-1);
+  }
+
+  &__symbol {
+    user-select: none;
+  }
+}
