@@ -69,6 +69,33 @@ function rotateShip(e) {
   }
 }
 
+function startGame() {
+  const startScreen = document.querySelector('.starting-screen');
+  startScreen.classList.add('removed');
+  setTimeout(() => { startScreen.style.display = 'none'; }, 1000);
+}
+
+function addStartButton() {
+  if (!document.querySelector('.new-game')) {
+    const btn = document.createElement('button');
+    btn.classList.add('btn-primary', 'new-game');
+    btn.innerText = 'New Game';
+
+    btn.addEventListener('click', startGame);
+
+    document.querySelector('.ship-picker').style.display = 'none';
+    document.querySelector('.starting-screen__main-container').appendChild(btn);
+  }
+}
+
+function removeStartButton() {
+  if (document.querySelector('.new-game')) {
+    const btn = document.querySelector('.new-game');
+    btn.classList.add('removed');
+    setTimeout(() => btn.remove(), 1000);
+  }
+}
+
 function drop(e) {
   e.target.classList.remove('drag-over');
 
@@ -115,7 +142,7 @@ function addEventListenersToCells() {
 
 addEventListenersToCells();
 
-function resetAll() {
+function resetAll(withButton = true) {
   placedShips = [];
   player.reset();
   const board = document.querySelector('.board');
@@ -296,6 +323,9 @@ function resetAll() {
           </div>`;
   shipEls = [...document.querySelectorAll('.ship')];
   shipEls.forEach((shipEl) => setUpDragAndDrop(shipEl));
+  if (withButton) {
+    removeStartButton();
+  }
 }
 
 const resetBtn = document.querySelector('.reset-btn');
@@ -304,7 +334,7 @@ resetBtn.addEventListener('click', resetAll);
 const randomizeBtn = document.querySelector('.random-btn');
 randomizeBtn.addEventListener('click', () => {
   player.reset();
-  resetAll();
+  resetAll(false);
   player.placeAllShipsAtOnce(SHIPS);
   for (let i = 0; i < GRID_SIZE; i += 1) {
     for (let j = 0; j < GRID_SIZE; j += 1) {
@@ -342,4 +372,5 @@ randomizeBtn.addEventListener('click', () => {
       }
     }
   }
+  addStartButton();
 });
