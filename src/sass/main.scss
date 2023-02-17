@@ -10,6 +10,9 @@
 @forward './components/ship-picker';
 @forward './components/button';
 @forward './components/ship';
+@forward './components/remaining-ships';
+@forward './components/game-field';
 
 @forward './layout/header';
 @forward './layout/starting-screen';
+@forward './layout/main';

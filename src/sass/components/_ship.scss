@@ -1,9 +1,15 @@
 .ship {
   display: flex;
-  align-self: start;
+  // align-self: start;
   justify-self: start;
   cursor: pointer;
   z-index: 100;
+  width: auto;
+
+  &--small &__cell {
+      width: 2rem;
+      height: 2rem;
+    }
 
   &__cell {
     flex: 1 0 auto;

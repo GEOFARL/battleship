@@ -1,0 +1,16 @@
+.remaining-ships {
+  width: auto;
+  display: flex;
+  flex-direction: column-reverse;
+  padding-top: 12rem;
+  gap: .7rem;
+  align-self: center;
+  
+  &--player {
+    align-items: flex-end;
+  }
+
+  &--computer {
+    align-items: flex-start;
+  }
+}

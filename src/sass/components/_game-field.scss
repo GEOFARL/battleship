@@ -1,0 +1,23 @@
+.game-field {
+  display: grid;
+  grid-template-columns: 12.5rem 48rem 48rem 12.5rem;
+  column-gap: 3rem;
+
+  &__player {
+    justify-self: start;
+  }
+
+  &__computer {
+    justify-self: end;
+  }
+
+  &__title {
+    text-align: center;
+    font-size: 1.8rem;
+    margin-top: 2rem;
+  }
+
+  &__title:last-of-type {
+    padding-left: 7rem;
+  }
+}

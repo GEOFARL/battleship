@@ -96,6 +96,10 @@ function removeStartButton() {
   }
 }
 
+function returnGrid() {
+  setTimeout(() => { document.querySelector('.ship-picker').style.display = 'grid'; }, 1000);
+}
+
 function drop(e) {
   e.target.classList.remove('drag-over');
 
@@ -329,7 +333,10 @@ function resetAll(withButton = true) {
 }
 
 const resetBtn = document.querySelector('.reset-btn');
-resetBtn.addEventListener('click', resetAll);
+resetBtn.addEventListener('click', () => {
+  resetAll();
+  returnGrid();
+});
 
 const randomizeBtn = document.querySelector('.random-btn');
 randomizeBtn.addEventListener('click', () => {
