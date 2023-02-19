@@ -12,6 +12,8 @@
     },
     "ignorePatterns": ["dist", "node_modules", "webpack*.js", "*.test.js"],
     "rules": {
-        "no-console": "off"
+        "no-console": "off",
+        "no-param-reassign": "off",
+        "import/no-cycle": "off"
     }
 }

@@ -2,7 +2,6 @@ import './sass/main.scss';
 import './template.html';
 // import Player from './modules/Player';
 // import Computer from './modules/Computer';
-import './modules/DOMStuff';
 import './modules/Game';
 // import { SHIPS } from './modules/constants';
 
