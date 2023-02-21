@@ -8,7 +8,7 @@ export default function setUpRandomizeButton(player, placedShips) {
   randomizeBtn.addEventListener('click', () => {
     resetStartingScreen(player, placedShips, false);
     player.placeAllShipsAtOnce(SHIPS);
-    placeAllShipsOnBoard(player, placedShips);
+    placeAllShipsOnBoard(player, placedShips, '.starting-screen__main-container .board__cell');
     addStartButton();
   });
 }

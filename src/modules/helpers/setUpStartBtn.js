@@ -1,8 +1,16 @@
+import { player } from '../Game';
+import placeAllShipsOnBoard from './placeAllShipsOnBoard';
+import cleanShip from './cleanShip';
+import setUpComputerBoard from './setUpComputerBoard';
+
 function startGame() {
   const startScreen = document.querySelector('.starting-screen');
   startScreen.classList.add('removed');
   setTimeout(() => {
     startScreen.style.display = 'none';
+    placeAllShipsOnBoard(player, [], '.game-field__player .board__cell');
+    cleanShip();
+    setUpComputerBoard();
   }, 1000);
 }
 

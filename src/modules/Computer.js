@@ -10,14 +10,19 @@ export default class Computer {
   placeAllShipsAtOnce = placeAllShipsAtOnce;
 
   static attackRandomly(enemy) {
+    let ship;
+    let x;
+    let y;
     try {
-      let { x, y } = getRandomPos();
+      ({ x, y } = getRandomPos());
       while (enemy.gameboard.hasBeenAttacked([x, y])) {
         ({ x, y } = getRandomPos());
       }
+      ship = enemy.gameboard.grid[y][x];
       enemy.gameboard.receiveAttack([x, y]);
     } catch (err) {
       console.log(err.message);
     }
+    return [[x, y], ship];
   }
 }

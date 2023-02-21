@@ -1,5 +1,5 @@
 import getShipCoordinates from './getShipCoordinates';
-import player from '../Game';
+import { player } from '../Game';
 
 export default function rotateShip(e) {
   const allCells = [...document.querySelectorAll('.starting-screen__main-container .board__cell')];

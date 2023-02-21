@@ -13,10 +13,12 @@ const SHIPS = [
 const MISSED_SHOT = 0;
 const HIT = 1;
 const GRID_SIZE = 10;
+const HIT_TIME = 1;
 
 export {
   SHIPS,
   MISSED_SHOT,
   HIT,
   GRID_SIZE,
+  HIT_TIME,
 };

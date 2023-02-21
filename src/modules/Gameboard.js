@@ -5,19 +5,21 @@ export default class Gameboard {
   constructor() {
     this.grid = [...new Array(GRID_SIZE)].map(() => [...new Array(GRID_SIZE)].fill(null));
     this.ships = [];
-    this.sunkShips = 0;
+    this.sunkShips = [];
   }
 
   placeShip(ship, coordinates, horizontal = true) {
+    const { length, name, id } = { ...ship };
+    const uniqueShip = new Ship({ length, name, id });
     const [x, y] = coordinates;
-    if (!this.ships.includes(ship)) {
-      this.ships.push(ship);
+    if (!this.ships.includes(uniqueShip)) {
+      this.ships.push(uniqueShip);
     }
-    for (let i = 0; i < ship.length; i += 1) {
+    for (let i = 0; i < uniqueShip.length; i += 1) {
       if (horizontal) {
-        this.grid[y][x - i] = ship;
+        this.grid[y][x - i] = uniqueShip;
       } else {
-        this.grid[y + i][x] = ship;
+        this.grid[y + i][x] = uniqueShip;
       }
     }
   }
@@ -26,10 +28,12 @@ export default class Gameboard {
     const [x, y] = coordinates;
     if (this.grid[y][x] === null) {
       this.grid[y][x] = MISSED_SHOT;
-    } else {
+    } else if (this.grid[y][x] !== HIT) {
       this.grid[y][x].hit();
       if (this.grid[y][x].isSunk()) {
-        this.sunkShips += 1;
+        if (!this.sunkShips.includes(this.grid[y][x])) {
+          this.sunkShips.push(this.grid[y][x]);
+        }
       }
       this.grid[y][x] = HIT;
     }
@@ -76,6 +80,11 @@ export default class Gameboard {
   isFree(coordinates) {
     const [x, y] = coordinates;
     return this.grid[y][x] === null;
+  }
+
+  isHit(coordinates) {
+    const [x, y] = coordinates;
+    return this.grid[y][x] === HIT;
   }
 
   removeShip(id) {
