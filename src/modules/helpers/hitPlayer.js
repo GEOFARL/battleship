@@ -58,14 +58,30 @@ export default async function hitPlayer() {
   if (cell.firstElementChild) {
     cell = cell.querySelector('.ship__cell');
   }
-  styleCell(cell);
+  const hitMarkk = document.createElement('div');
+  styleCell(hitMarkk);
+  cell.appendChild(hitMarkk);
   if (player.gameboard.isHit([x, y])) {
     if (!cell.classList.contains('ship__cell')) {
       cell = findCell([x, y]);
     }
-    cell.innerHTML = '&#215;';
-    cell.style.color = 'white';
-    styleCell(cell);
+    if (!cell.firstElementChild) {
+      const hitMark = document.createElement('div');
+      cell.appendChild(hitMark);
+      hitMark.innerHTML = '&#215;';
+      hitMark.style.color = 'white';
+      styleCell(hitMark);
+    } else {
+      cell.firstElementChild.innerHTML = '&#215;';
+      cell.firstElementChild.style.color = 'white';
+    }
+    // cell.appendChild(hitMark);
+    // hitMark.innerHTML = '&#215;';
+    // hitMark.style.color = 'white';
+    // // cell.innerHTML = '&#215;';
+    // // cell.style.color = 'white';
+    // styleCell(hitMark);
+    // // styleCell(cell);
     handleAdjZone([x, y], player, ship, '.game-field__player .board__cell');
     if (!ship.isSunk()) {
       // Determine possible moves
@@ -100,7 +116,15 @@ export default async function hitPlayer() {
       }, HIT_TIME);
     });
   }
-  cell.innerHTML = '&#8226;';
+  if (!cell.firstElementChild) {
+    const hitMark = document.createElement('div');
+    hitMark.innerHTML = '&#8226;';
+    styleCell(hitMark);
+    cell.appendChild(hitMark);
+  } else {
+    cell.firstElementChild.innerHTML = '&#8226;';
+  }
+  // cell.innerHTML = '&#8226;';
   document.querySelector('body').style['pointer-events'] = 'auto';
   return new Promise((resolve) => {
     setTimeout(() => {
