@@ -6,14 +6,10 @@ import getShipCoordinates from './getShipCoordinates';
 import styleCell from './styleCell';
 
 export default function handleAdjZone(coordinates, player, ship, boardSelector) {
-  if (boardSelector === '.game-field__player .board__cell') {
-    console.log('Ship is sunk need to remove adj cells: ', coordinates, player, ship, boardSelector);
-  }
   if (player.gameboard.sunkShips.includes(ship)) {
     const allCells = [...document.querySelectorAll(boardSelector)];
     const [cell, horizontal] = findShipHead(coordinates, player, boardSelector);
     const [x, y] = getShipCoordinates(cell, allCells);
-    console.log(cell, horizontal, x, y);
     if (horizontal) {
       let i = 0;
       let cellEl = allCells[y * GRID_SIZE + x + 1];
