@@ -5,16 +5,26 @@ import setUpCells from './helpers/setUpCells';
 import Player from './Player';
 import Computer from './Computer';
 import { SHIPS } from './constants';
+import resetStartingScreen from './helpers/resetStartingScreen';
 
-const player = new Player();
-const computer = new Computer();
-computer.placeAllShipsAtOnce(SHIPS);
+let player;
+let computer;
+let placedShips = [];
+
+export default function setUpNewGame() {
+  player = new Player();
+  computer = new Computer();
+  computer.placeAllShipsAtOnce(SHIPS);
+  resetStartingScreen(player, placedShips, true);
+  document.querySelector('.ship-picker').style.display = 'grid';
+  placedShips = [];
+
+  setUpCells(player, placedShips);
+  setUpShipDragging();
+  setUpResetBtn(player, placedShips);
+  setUpRandomizeButton(player, placedShips);
+}
+setUpNewGame();
 export { player, computer };
-const placedShips = [];
 
-setUpCells(player, placedShips);
-setUpShipDragging();
-setUpResetBtn(player, placedShips);
-setUpRandomizeButton(player, placedShips);
-
-// document.addEventListener('click', () => { console.log(placedShips, player, computer); });
+document.addEventListener('click', () => { console.log(placedShips, player, computer); });

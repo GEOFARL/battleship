@@ -15,7 +15,8 @@ function startGame() {
 }
 
 export function addStartButton() {
-  if (!document.querySelector('.new-game')) {
+  const startScreen = document.querySelector('.starting-screen');
+  if (!startScreen.querySelector('.new-game')) {
     const btn = document.createElement('button');
     btn.classList.add('btn-primary', 'new-game');
     btn.innerText = 'New Game';
@@ -28,7 +29,7 @@ export function addStartButton() {
 }
 
 export function removeStartButton() {
-  if (document.querySelector('.new-game')) {
+  if (document.querySelector('.starting-screen .new-game')) {
     const btn = document.querySelector('.new-game');
     btn.classList.add('removed');
     setTimeout(() => btn.remove(), 1000);

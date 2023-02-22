@@ -99,4 +99,8 @@ export default class Gameboard {
     this.grid = [...new Array(GRID_SIZE)].map(() => [...new Array(GRID_SIZE)].fill(null));
     this.ships = [];
   }
+
+  isGameOver() {
+    return this.ships.length === this.sunkShips.length;
+  }
 }

@@ -5,6 +5,7 @@ import styleCell from './styleCell';
 import findCell from './findCell';
 import handleAdjZone from './handleAdjZone';
 import Gameboard from '../Gameboard';
+import setUpEndWindow from './setUpEndWindow';
 
 let hits = [];
 let possibleMoves = [];
@@ -107,6 +108,10 @@ export default async function hitPlayer() {
         && !possibleMoves.includes([x - 1, y])) {
         possibleMoves.push([x - 1, y]);
       }
+    }
+
+    if (player.gameboard.isGameOver()) {
+      setUpEndWindow('computer');
     }
 
     return new Promise((resolve) => {

@@ -5,6 +5,7 @@ import getShipCoordinates from './getShipCoordinates';
 import hitPlayer from './hitPlayer';
 import styleCell from './styleCell';
 import handleAdjZone from './handleAdjZone';
+import setUpEndWindow from './setUpEndWindow';
 
 export default function hitComputer(e) {
   const cell = e.target;
@@ -33,6 +34,10 @@ export default function hitComputer(e) {
           title.innerHTML = 'Your turn';
         });
       }, HIT_TIME);
+    }
+
+    if (computer.gameboard.isGameOver()) {
+      setUpEndWindow('player');
     }
   }
 }
