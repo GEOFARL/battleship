@@ -1,6 +1,24 @@
+@use '../abstracts/mixins' as m;
+
 :root {
   font-size: 62.5%;
   box-sizing: border-box;
+
+  @include m.respond(tab-land) {
+    font-size: 50%;
+  }
+
+  @include m.respond(tab-port) {
+    font-size: 40%;
+  }
+
+  @include m.respond(phone) {
+    font-size: 28%;
+  }
+
+  @include m.respond(big-desktop) {
+    font-size: 75%;
+  }
 }
 
 *, *::before, *::after {

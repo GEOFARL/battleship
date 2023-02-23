@@ -1,3 +1,5 @@
+@use '../abstracts/mixins' as m;
+
 .end-screen {
   display: none;
   position: fixed;
@@ -15,6 +17,14 @@
     backdrop-filter: blur(10px);
     border: 1px solid rgba(255, 255, 255, 0.25);
     border-radius: 1rem;
+
+    @include m.respond(tab-land) {
+      margin: 20rem auto 0 auto;
+    }
+  
+    @include m.respond(phone) {
+      max-width: 70rem;
+    }
   }
 
   &__game-over {

@@ -1,14 +1,36 @@
+@use '../abstracts/mixins' as m;
+
 .game-field {
   display: grid;
   grid-template-columns: 12.5rem 48rem 48rem 12.5rem;
   column-gap: 3rem;
 
+  @include m.respond(tab-land) {
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+  }
+
+  @include m.respond(phone) {
+    grid-template-columns: repeat(4, 1fr);
+    justify-items: center;
+    column-gap: 5rem;
+  }
+
   &__player {
     justify-self: start;
+    @include m.respond(phone) {
+      grid-column: 1 / 4;
+      grid-row: 1 / 2;
+      justify-self: center;
+    }
   }
 
   &__computer {
     justify-self: end;
+    @include m.respond(phone) {
+      grid-column: 2 / 5;
+      justify-self: center;
+    }
   }
 
   &__title {
