@@ -6,13 +6,13 @@ import findCell from './findCell';
 import handleAdjZone from './handleAdjZone';
 import Gameboard from '../Gameboard';
 import setUpEndWindow from './setUpEndWindow';
+import addSunkShipMark from './addSunkShipMark';
 
 let hits = [];
 let possibleMoves = [];
 let shipBeingAttacked = null;
 
 export default async function hitPlayer() {
-  console.log('Hits: ', [...hits], 'Possible moves', [...possibleMoves], shipBeingAttacked);
   let x;
   let y;
   let ship;
@@ -31,6 +31,7 @@ export default async function hitPlayer() {
     }
     ship = shipBeingAttacked;
     if (shipBeingAttacked.isSunk()) {
+      addSunkShipMark(shipBeingAttacked.length, '.remaining-ships--player');
       hits = [];
       possibleMoves = [];
       shipBeingAttacked = null;

@@ -6,6 +6,7 @@ import hitPlayer from './hitPlayer';
 import styleCell from './styleCell';
 import handleAdjZone from './handleAdjZone';
 import setUpEndWindow from './setUpEndWindow';
+import addSunkShipMark from './addSunkShipMark';
 
 export default function hitComputer(e) {
   const cell = e.target;
@@ -15,7 +16,6 @@ export default function hitComputer(e) {
   // styleCell(cell);
 
   const coordinates = getShipCoordinates(cell, [...document.querySelectorAll('.game-field__computer .board__cell')]);
-  console.log(coordinates);
   const ship = computer.gameboard.grid[coordinates[1]][coordinates[0]];
 
   if (attackEnemy(computer, coordinates)) {
@@ -23,6 +23,10 @@ export default function hitComputer(e) {
       hitMark.innerHTML = '&#215;';
       // cell.innerHTML = '&#215;';
       handleAdjZone(coordinates, computer, ship, '.game-field__computer .board__cell');
+
+      if (ship.isSunk()) {
+        addSunkShipMark(ship.length, '.remaining-ships--computer');
+      }
     } else {
       hitMark.innerHTML = '&#8226;';
       // cell.innerHTML = '&#8226;';

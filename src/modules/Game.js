@@ -6,6 +6,7 @@ import Player from './Player';
 import Computer from './Computer';
 import { SHIPS } from './constants';
 import resetStartingScreen from './helpers/resetStartingScreen';
+import setUpRemainingShips from './helpers/setUpRemainingShips';
 
 let player;
 let computer;
@@ -19,6 +20,7 @@ export default function setUpNewGame() {
   document.querySelector('.ship-picker').style.display = 'grid';
   placedShips = [];
 
+  setUpRemainingShips();
   setUpCells(player, placedShips);
   setUpShipDragging();
   setUpResetBtn(player, placedShips);
@@ -27,4 +29,4 @@ export default function setUpNewGame() {
 setUpNewGame();
 export { player, computer };
 
-document.addEventListener('click', () => { console.log(placedShips, player, computer); });
+// document.addEventListener('click', () => { console.log(placedShips, player, computer); });
