@@ -46,7 +46,6 @@ export default async function hitPlayer() {
         marginY = marginY > 0 ? -1 : 1;
       }
       const [newX, newY] = [x + marginX, y + marginY];
-      console.log('NewX: ', newX, 'NewY: ', newY);
       if (Gameboard.isOnBoard([newX, newY])
         && !player.gameboard.hasBeenAttacked([newX, newY])
         && !possibleMoves.includes([newX, newY])) {
