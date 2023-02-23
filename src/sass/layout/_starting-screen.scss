@@ -6,6 +6,9 @@
   inset: 0;
   z-index: 100000;
   background-color: rgba(0, 0, 0, .75);
+  // @include m.respond(phone) {
+  //   position: absolute;
+  // }
 
   &__main-container {
     max-width: 90rem;
@@ -26,6 +29,7 @@
     }
 
     @include m.respond(phone) {
+      margin: 5rem auto 0 auto;
       max-width: 70rem;
       grid-template-areas:
         "board"
@@ -33,6 +37,10 @@
         "hint"
         "ship-picker";
       justify-content: center;
+    }
+
+    @include m.respond(mini) {
+      max-width: 50rem;
     }
   }
 

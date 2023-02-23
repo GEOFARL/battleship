@@ -16,6 +16,10 @@
     font-size: 28%;
   }
 
+  @include m.respond(mini) {
+    font-size: 25%;
+  }
+
   @include m.respond(big-desktop) {
     font-size: 75%;
   }

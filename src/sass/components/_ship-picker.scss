@@ -1,3 +1,5 @@
+@use '../abstracts/mixins' as m;
+
 .ship-picker {
   grid-area: ship-picker;
   display: grid;
@@ -5,4 +7,9 @@
   grid-template-rows: repeat(4, 6rem);
   align-self: center;
   margin-left: 2rem;
+
+  @include m.respond(phone) {
+    grid-template-columns: repeat(6, 3.5rem);
+    grid-template-rows: repeat(4, 4rem);
+  }
 }

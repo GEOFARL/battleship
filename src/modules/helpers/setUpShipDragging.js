@@ -1,3 +1,5 @@
+import { addStartButton } from './setUpStartBtn';
+
 function setUpDragAndDrop(shipEl) {
   shipEl.addEventListener('dragstart', (e) => {
     // GET CURRENT SHIP
@@ -15,6 +17,11 @@ function setUpDragAndDrop(shipEl) {
   shipEl.addEventListener('dragend', (e) => {
     const ship = e.target.closest('.ship');
     ship.classList.remove('hide');
+
+    const leftShips = [...document.querySelector('.ship-picker').childNodes].filter((node) => node.tagName === 'DIV');
+    if (leftShips.length === 0) {
+      addStartButton();
+    }
   });
 }
 

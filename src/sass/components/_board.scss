@@ -1,9 +1,20 @@
+@use '../abstracts/mixins' as m;
+
 .board {
   display: grid;
   grid-template-columns: repeat(11, 4rem);
   grid-template-rows: repeat(11, 4rem);
   place-items: center;
   grid-area: board;
+  @include m.respond(phone) {
+    grid-template-columns: repeat(11, 3rem);
+    grid-template-rows: repeat(11, 3rem);
+  }
+
+  @include m.respond(mini) {
+    grid-template-columns: repeat(11, 2.8rem);
+    grid-template-rows: repeat(11, 2.8rem);
+  }
 
   &__cell {
     width: 98.5%;
